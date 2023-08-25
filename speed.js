@@ -29,12 +29,19 @@ document.addEventListener('keydown', e=>{    //global event listener for 'keydow
 
 //some stuff for testing
 //javascript:document.getElementsByClassName("video-stream html5-main-video")[0].playbackRate = 1;
-//2.5
-//3
-//3.5
-//4
-//4.5
-//5
-//+= 0.5
 //document.querySelector('video').playbackRate = 1.25
 //document.getElementsByClassName("video-stream html5-main-video")[0].setPlaybackRate = 0.25
+
+
+//css code to force 4 videos in a row and remove shorts (extention to run css code needed)
+
+/*number of rows
+.style-scope.ytd-rich-grid-renderer{--ytd-rich-grid-items-per-row: 4;}
+#contents > ytd-rich-grid-row,#contents > ytd-rich-grid-row > #contents {
+display: contents;}
+*/
+
+/*remove shorts
+#items.ytd-grid-renderer>ytd-grid-video-renderer:has(ytd-thumbnail-overlay-time-status-renderer[overlay-style="SHORTS"]) {
+display: none;}
+*/
