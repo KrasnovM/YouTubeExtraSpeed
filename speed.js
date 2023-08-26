@@ -3,7 +3,16 @@ var videoTime = document.getElementsByClassName("ytp-time-duration")[0] // get v
 //for some reason if inside videoTime variable add .innerHTML video duration won't override, should be called every time in code
 var videoTimeDefault = document.getElementsByClassName("ytp-time-duration")[0].innerHTML // save default video duration
 
-videoTime.innerHTML = videoTimeDefault + " x" + videoPlayer.playbackRate // add video speed identifier after video duration
+videoTime.innerHTML = videoTimeDefault + " x" + videoPlayer.playbackRate // add video speed identifier after video duration 
+
+setInterval(function() {  //if you click on another video without reloading page videoTimeDefault won't update, identifier will be added only after speed change
+                          // periodic function will check every 20 seconds for changes
+    var videoTimeDefaultTmp = document.getElementsByClassName("ytp-time-duration")[0].innerHTML
+    if(!videoTimeDefaultTmp.includes("x")) {
+        videoTimeDefault = videoTimeDefaultTmp
+        videoTime.innerHTML = videoTimeDefault + " x" + videoPlayer.playbackRate
+    }
+}, 20000); // 20000 milliseconds
 
 document.addEventListener('keydown', e=>{    //global event listener for 'keydown' events, 'e' is the key pressed
   
