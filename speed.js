@@ -3,16 +3,13 @@ var videoTime = document.getElementsByClassName("ytp-time-duration")[0] // get v
 //for some reason if inside videoTime variable add .innerHTML video duration won't override, should be called every time in code
 var videoTimeDefault = document.getElementsByClassName("ytp-time-duration")[0].innerHTML // save default video duration
 
-videoTime.innerHTML = videoTimeDefault + " x" + videoPlayer.playbackRate // add video speed identifier after video duration 
-
-setInterval(function() {  //if you click on another video without reloading page videoTimeDefault won't update, identifier will be added only after speed change
-                          // periodic function will check every 20 seconds for changes
+videoPlayer.addEventListener('playing', e=>{ //add video speed identifier after duration when video starts playing
     var videoTimeDefaultTmp = document.getElementsByClassName("ytp-time-duration")[0].innerHTML
-    if(!videoTimeDefaultTmp.includes("x")) {
+    if(!videoTimeDefaultTmp.includes("x")) { //TODO: may be change innerHTML every time on playing? (but old code from interval works)
         videoTimeDefault = videoTimeDefaultTmp
         videoTime.innerHTML = videoTimeDefault + " x" + videoPlayer.playbackRate
     }
-}, 20000); // 20000 milliseconds
+})
 
 document.addEventListener('keydown', e=>{    //global event listener for 'keydown' events, 'e' is the key pressed
   
@@ -41,16 +38,34 @@ document.addEventListener('keydown', e=>{    //global event listener for 'keydow
 //document.querySelector('video').playbackRate = 1.25
 //document.getElementsByClassName("video-stream html5-main-video")[0].setPlaybackRate = 0.25
 
+/*
+videoTime.innerHTML = videoTimeDefault + " x" + videoPlayer.playbackRate // add video speed identifier after video duration 
 
-//css code to force 4 videos in a row and remove shorts (extention to run css code needed)
+setInterval(function() {  //if you click on another video without reloading page videoTimeDefault won't update, identifier will be added only after speed change
+                          // periodic function will check every 20 seconds for changes
+    var videoTimeDefaultTmp = document.getElementsByClassName("ytp-time-duration")[0].innerHTML
+    if(!videoTimeDefaultTmp.includes("x")) {
+        videoTimeDefault = videoTimeDefaultTmp
+        videoTime.innerHTML = videoTimeDefault + " x" + videoPlayer.playbackRate
+    }
+}, 20000); // 20000 milliseconds
+*/
 
-/*number of rows
+//________________________________________________________________________________________________
+
+//css code to force 4 videos in a row and remove shorts (extention to run css code required)
+
+//number of rows
+/*
 .style-scope.ytd-rich-grid-renderer{--ytd-rich-grid-items-per-row: 4;}
 #contents > ytd-rich-grid-row,#contents > ytd-rich-grid-row > #contents {
 display: contents;}
 */
 
-/*remove shorts
+//remove shorts
+/*
 #items.ytd-grid-renderer>ytd-grid-video-renderer:has(ytd-thumbnail-overlay-time-status-renderer[overlay-style="SHORTS"]) {
 display: none;}
 */
+
+
