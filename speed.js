@@ -3,6 +3,10 @@ var videoTime = document.getElementsByClassName("ytp-time-duration")[0] // get v
 //for some reason if inside videoTime variable add .innerHTML video duration won't override, should be called every time in code
 var videoTimeDefault = document.getElementsByClassName("ytp-time-duration")[0].innerHTML // save default video duration
 
+const eventPause = new Event('pause'); //pause video event
+const eventPlaying = new Event('playing'); //play video event
+//event are used because that's the only way i found to summon overlay
+
 videoPlayer.addEventListener('playing', e=>{ //add video speed identifier after duration when video starts playing
     var videoTimeDefaultTmp = document.getElementsByClassName("ytp-time-duration")[0].innerHTML
     if(!videoTimeDefaultTmp.includes("x")) {
@@ -20,15 +24,25 @@ document.addEventListener('keydown', e=>{    //global event listener for 'keydow
                                                      //additional validation will be required (video player won't crash, code just won't be executed)
         
         videoTime.innerHTML = videoTimeDefault + " x" + videoPlayer.playbackRate //change video speed identifier after video duration
+
+        videoPlayer.dispatchEvent(eventPause) //pause event makes overlay show up
+        setTimeout(()=> {
+            videoPlayer.dispatchEvent(eventPlaying)
+        }, 600) //after 600 milliseconds playing event makes overlay hide
         
     } else if (e.keyCode === 219 && videoPlayer.playbackRate > 0) { //key code 219 is for '[' button, 0 is the minimum speed for playbackRate property
         javascript:videoPlayer.playbackRate -= 0.25 // same stuff but it's decrement
-        videoTime.innerHTML = videoTimeDefault + " x" + videoPlayer.playbackRate   
+        videoTime.innerHTML = videoTimeDefault + " x" + videoPlayer.playbackRate
+        videoPlayer.dispatchEvent(eventPause)
+        setTimeout(()=> {
+            videoPlayer.dispatchEvent(eventPlaying)
+        }, 600)
     }
     
     if(e.keyCode === 190 || e.keyCode === 188 && videoPlayer.playbackRate <= 2 && videoPlayer.playbackRate >= 0.25) { //video speed can be changed by hotkeys in player ('>'(190) and '<'(188)) but only between 0.25 and 2 
                                                                                                                       //it will immediatly override current value
         videoTime.innerHTML = videoTimeDefault + " x" + videoPlayer.playbackRate
+
     }
 })
 
