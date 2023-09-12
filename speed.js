@@ -1,20 +1,23 @@
-var videoPlayer = document.getElementsByClassName("video-stream html5-main-video")[0] //get video player location
-var videoTime = document.getElementsByClassName("ytp-time-duration")[0] // get video duration location (to put current video speed)
+var videoPlayer //get video player location
+var videoTime // get video duration location (to put current video speed)
 //for some reason if inside videoTime variable add .innerHTML video duration won't override, should be called every time in code
-var videoTimeDefault = document.getElementsByClassName("ytp-time-duration")[0].innerHTML // save default video duration
+var videoTimeDefault // save default video duration
 
 const eventPause = new Event('pause'); //pause video event
 const eventPlaying = new Event('playing'); //play video event
 //event are used because that's the only way i found to summon overlay
 
-document.addEventListener('mouseup', e=>{ //add video speed identifier after click
-    setTimeout(()=> {
+document.addEventListener('mouseup', e=>{ //add video info and speedometer after click on document
+    videoPlayer = document.getElementsByClassName("video-stream html5-main-video")[0]
+    videoTime = document.getElementsByClassName("ytp-time-duration")[0]
+    
+    setTimeout(()=> { //setTimeout makes speedometer appear on next click (if you choose next video)
         var videoTimeDefaultTmp = document.getElementsByClassName("ytp-time-duration")[0].innerHTML
         if(!videoTimeDefaultTmp.includes("x")) {
             videoTimeDefault = videoTimeDefaultTmp
-            videoTime.innerHTML = videoTimeDefault + " x" + videoPlayer.playbackRate // add video speed identifier after video duration
+            videoTime.innerHTML = videoTimeDefault + " x" + videoPlayer.playbackRate // add video speedometer after video duration
         }
-    }, 1000) // 1000 milliseconds = 1 second
+    }, 1000) // 1000 milliseconds = 1 second, i prefer 700
 })
 
 document.addEventListener('keydown', e=>{    //global event listener for 'keydown' events, 'e' is the key pressed
@@ -25,7 +28,7 @@ document.addEventListener('keydown', e=>{    //global event listener for 'keydow
                                                      //if sum of increments can't be equal to 1 (2, 0.75, 0.33) they will go beyond 16 or below 0 
                                                      //additional validation will be required (video player won't crash, code just won't be executed)
         
-        videoTime.innerHTML = videoTimeDefault + " x" + videoPlayer.playbackRate //change video speed identifier after video duration
+        videoTime.innerHTML = videoTimeDefault + " x" + videoPlayer.playbackRate //change video speedometer after video duration
 
         videoPlayer.dispatchEvent(eventPause) //pause event makes overlay show up
         setTimeout(()=> {
@@ -60,7 +63,7 @@ document.addEventListener('keydown', e=>{    //global event listener for 'keydow
 //document.querySelector('video').playbackRate = 1.25
 
 /*
-setInterval(function() {  //if you click on another video without reloading page videoTimeDefault won't update, identifier will be added only after speed change
+setInterval(function() {  //if you click on another video without reloading page videoTimeDefault won't update, speedometer will be added only after speed change
                           // periodic function will check every 20 seconds for changes
     var videoTimeDefaultTmp = document.getElementsByClassName("ytp-time-duration")[0].innerHTML
     if(!videoTimeDefaultTmp.includes("x")) {
