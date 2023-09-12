@@ -7,7 +7,7 @@ const eventPause = new Event('pause'); //pause video event
 const eventPlaying = new Event('playing'); //play video event
 //event are used because that's the only way i found to summon overlay
 
-videoPlayer.addEventListener('playing', e=>{ //add video speed identifier after duration when video starts playing
+videoPlayer.addEventListener('resize', e=>{ //add video speed identifier after duration when video is opened
     var videoTimeDefaultTmp = document.getElementsByClassName("ytp-time-duration")[0].innerHTML
     if(!videoTimeDefaultTmp.includes("x")) {
         videoTimeDefault = videoTimeDefaultTmp
