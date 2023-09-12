@@ -7,12 +7,14 @@ const eventPause = new Event('pause'); //pause video event
 const eventPlaying = new Event('playing'); //play video event
 //event are used because that's the only way i found to summon overlay
 
-videoPlayer.addEventListener('resize', e=>{ //add video speed identifier after duration when video is opened
-    var videoTimeDefaultTmp = document.getElementsByClassName("ytp-time-duration")[0].innerHTML
-    if(!videoTimeDefaultTmp.includes("x")) {
-        videoTimeDefault = videoTimeDefaultTmp
-        videoTime.innerHTML = videoTimeDefault + " x" + videoPlayer.playbackRate // add video speed identifier after video duration
-    }
+document.addEventListener('mouseup', e=>{ //add video speed identifier after click
+    setTimeout(()=> {
+        var videoTimeDefaultTmp = document.getElementsByClassName("ytp-time-duration")[0].innerHTML
+        if(!videoTimeDefaultTmp.includes("x")) {
+            videoTimeDefault = videoTimeDefaultTmp
+            videoTime.innerHTML = videoTimeDefault + " x" + videoPlayer.playbackRate // add video speed identifier after video duration
+        }
+    }, 1000) // 1000 milliseconds = 1 second
 })
 
 document.addEventListener('keydown', e=>{    //global event listener for 'keydown' events, 'e' is the key pressed
